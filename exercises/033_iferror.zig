@@ -21,7 +21,7 @@
 //         ...
 //     }
 //
-const MyNumberError = error{
+const NumError = error{
     TooBig,
     TooSmall,
 };
@@ -38,7 +38,8 @@ pub fn main() void {
         if (n) |value| {
             std.debug.print("={}. ", .{value});
         } else |err| switch (err) {
-            MyNumberError.TooBig => std.debug.print(">4. ", .{}),
+            NumError.TooBig => std.debug.print(">4. ", .{}),
+            NumError.TooSmall => std.debug.print("<4. ", .{}),
             // Please add a match for TooSmall here and have it print: "<4. "
         }
     }
@@ -48,8 +49,8 @@ pub fn main() void {
 
 // This time we'll have numberMaybeFail() return an error union rather
 // than a straight error.
-fn numberMaybeFail(n: u8) MyNumberError!u8 {
-    if (n > 4) return MyNumberError.TooBig;
-    if (n < 4) return MyNumberError.TooSmall;
+fn numberMaybeFail(n: u8) NumError!u8 {
+    if (n > 4) return NumError.TooBig;
+    if (n < 4) return NumError.TooSmall;
     return n;
 }
